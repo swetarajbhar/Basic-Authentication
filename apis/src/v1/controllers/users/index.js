@@ -56,7 +56,7 @@ const userLogin = async (req, res, next) => {
       accessToken: response?.accessToken,
     };
 
-    const responseReceived = response ? 200 : 404;
+    const responseReceived = response ? 200 : 401;
 
     res.body.message = message.login[responseReceived];
     res.status(responseReceived).send({

@@ -1,6 +1,6 @@
 const message = {
   register: {
-    200: "Registartion Successful",
+    200: "Registration Successful",
     400: "Bad request",
     401: "Unauthorised",
     403: "Forbidden",
@@ -11,7 +11,7 @@ const message = {
   login: {
     200: "Login Successful",
     400: "Bad request",
-    401: "Unauthorised",
+    401: "Invalid Username or Password",
     403: "Forbidden",
     404: "User not found.",
     409: "Resource Conflict",

@@ -35,7 +35,7 @@ const authenticate = async (req, res, next) => {
           res.header("Authorization", `Bearer ${accessToken}`);
           return next();
         }
-        return res.status(400).send("Invalid Token.");
+        return res.status(400).send({ status: 400, message: "Invalid Token." });
       }
     }
   }

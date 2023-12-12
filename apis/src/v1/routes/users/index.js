@@ -8,6 +8,7 @@ const { validate } = require("../../../global/validations/validator");
 const {
   userRegistration,
   userLogin,
+  refreshAccessToken,
 } = require("../../controllers/users/index");
 
 // User Registration Endpoint
@@ -19,5 +20,8 @@ router.post(
 
 // User Login Endpoint
 router.post("/login", validate(UserRegistartionLoginSchema), userLogin);
+
+// Refresh Access Token Endpoint
+router.post("/refresh", refreshAccessToken);
 
 module.exports = router;

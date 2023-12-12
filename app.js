@@ -1,5 +1,6 @@
 const express = require("express");
 const timeout = require("connect-timeout");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 // Load environment variables from a .env file (if it exists)
@@ -15,6 +16,7 @@ app.set("etag", false);
 
 app.use(express.text());
 app.use(express.json());
+app.use(cookieParser());
 
 // timeout middleware
 app.use(timeout("1200s"));

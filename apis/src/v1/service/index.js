@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { generateJWTToken } = require("../../utility/jwt/index");
+const { generateJWTToken, verifyJWTToken } = require("../../utility/jwt/index");
 
 const salt = 10;
 
@@ -47,7 +47,30 @@ const userLoginService = async (params) => {
     throw error;
   }
 };
+
+const refreshAccessTokenService = async (refreshToken) => {
+  try {
+    let decoded;
+    try {
+      decoded = verifyJWTToken(
+        refreshToken,
+        process.env.JWT_REFRESH_TOKEN_SECRET
+      );
+      const accessToken = generateJWTToken({
+        username: decoded.payload,
+        secret: process.env.JWT_ACCESS_TOKEN_SECRET,
+        expiry: process.env.JWT_ACCESS_TOKEN_EXPIRY,
+      });
+      return { accessToken };
+    } catch (error) {
+      return null;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   userRegistrationService,
   userLoginService,
+  refreshAccessTokenService,
 };

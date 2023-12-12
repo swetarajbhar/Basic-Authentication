@@ -6,6 +6,10 @@ const generateJWTToken = (tokenParams) => {
   });
 };
 
+const verifyJWTToken = (token, secretKey) => {
+  return jwt.verify(token, secretKey);
+};
 module.exports = {
   generateJWTToken,
+  verifyJWTToken,
 };

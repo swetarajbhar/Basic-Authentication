@@ -1,11 +1,13 @@
 const bcrypt = require("bcrypt");
 const { generateJWTToken, verifyJWTToken } = require("../../utility/jwt/index");
 
+// Cost factor for bcrypt hashing
 const salt = 10;
 
 // In-memory data store for users
 const users = [];
 
+// Service function for user registration
 const userRegistrationService = async (params) => {
   try {
     // Check if the username already exists
@@ -24,14 +26,17 @@ const userRegistrationService = async (params) => {
   }
 };
 
+// Service function for user login
 const userLoginService = async (params) => {
   try {
     const user = users.find((u) => u.username === params.username);
 
+    // Check if the user exists and the password is correct
     if (!user || !bcrypt.compareSync(params.password, user.password)) {
       return null;
     }
 
+    // Generate access token and refresh token for successful login
     const accessToken = generateJWTToken({
       username: params.username,
       secret: process.env.JWT_ACCESS_TOKEN_SECRET,
@@ -48,6 +53,7 @@ const userLoginService = async (params) => {
   }
 };
 
+// Service function for refreshing access tokens
 const refreshAccessTokenService = async (refreshToken) => {
   try {
     let decoded;
@@ -69,8 +75,18 @@ const refreshAccessTokenService = async (refreshToken) => {
     throw error;
   }
 };
+
+// Service function for listing users
+const listUsersService = async () => {
+  try {
+    return { users };
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   userRegistrationService,
   userLoginService,
   refreshAccessTokenService,
+  listUsersService,
 };
